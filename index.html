@@ -67,6 +67,24 @@
     pointer-events: auto;
   }
 
+  /* ---- modal: escolher vendedora ---- */
+  #routeModalOverlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  #routeModalOverlay.modal-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #routeModalPanel {
+    transform: scale(0.95) translateY(8px);
+    transition: transform 0.25s ease;
+  }
+  #routeModalOverlay.modal-open #routeModalPanel {
+    transform: scale(1) translateY(0);
+  }
+
   /* ---- reveal on scroll (seção Loja física) ---- */
   .reveal {
     opacity: 0;
@@ -304,9 +322,8 @@
 
       <div class="space-y-3">
         <!-- Varejo -->
-        <a href="https://wa.me/5535997801292?text=Oi%21%20Vim%20do%20Instagram%2C%20pode%20me%20ajudar%3F%20%F0%9F%98%8A"
-           target="_blank" rel="noopener"
-           class="group relative block h-24 hover:h-32 overflow-hidden border border-white/10 bg-white/[0.02] transition-all duration-300 ease-in-out hover:border-yellow-500/50 hover:bg-yellow-500/[0.05] hover:shadow-lg hover:shadow-yellow-500/10">
+        <button type="button" data-category="varejo"
+           class="route-trigger group relative block w-full text-left h-24 hover:h-32 overflow-hidden border border-white/10 bg-white/[0.02] transition-all duration-300 ease-in-out hover:border-yellow-500/50 hover:bg-yellow-500/[0.05] hover:shadow-lg hover:shadow-yellow-500/10">
           <span class="absolute top-3 left-3 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span class="absolute top-0 left-0 w-4 h-0.5 bg-yellow-500"></span>
             <span class="absolute top-0 left-0 w-0.5 h-4 bg-yellow-500"></span>
@@ -325,12 +342,11 @@
               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"></i>
             </span>
           </span>
-        </a>
+        </button>
 
         <!-- Atacado -->
-        <a href="https://wa.me/5535998054883?text=Oi%21%20Sou%20revendedora%20e%20quero%20informa%C3%A7%C3%B5es%20sobre%20atacado%20%F0%9F%98%8A"
-           target="_blank" rel="noopener"
-           class="group relative block h-24 hover:h-32 overflow-hidden border border-white/10 bg-white/[0.02] transition-all duration-300 ease-in-out hover:border-yellow-500/50 hover:bg-yellow-500/[0.05] hover:shadow-lg hover:shadow-yellow-500/10">
+        <button type="button" data-category="atacado"
+           class="route-trigger group relative block w-full text-left h-24 hover:h-32 overflow-hidden border border-white/10 bg-white/[0.02] transition-all duration-300 ease-in-out hover:border-yellow-500/50 hover:bg-yellow-500/[0.05] hover:shadow-lg hover:shadow-yellow-500/10">
           <span class="absolute top-3 left-3 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span class="absolute top-0 left-0 w-4 h-0.5 bg-yellow-500"></span>
             <span class="absolute top-0 left-0 w-0.5 h-4 bg-yellow-500"></span>
@@ -349,7 +365,7 @@
               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"></i>
             </span>
           </span>
-        </a>
+        </button>
 
         <!-- Site -->
         <a href="https://elainemellotricot.com.br/" target="_blank" rel="noopener"
@@ -400,6 +416,35 @@
       </div>
     </div>
   </section>
+
+  <!-- modal: escolher com qual vendedora falar (Varejo/Atacado) -->
+  <div id="routeModalOverlay" class="fixed inset-0 z-50 flex items-center justify-center px-6 bg-black/70 backdrop-blur-sm">
+    <div id="routeModalPanel" class="relative w-full max-w-sm rounded-2xl border border-white/10 bg-black px-6 py-8 text-center" style="background-image: radial-gradient(60% 100px at 50% 0%, rgba(255,255,255,0.06), transparent);">
+      <button type="button" id="routeModalClose" aria-label="Fechar" class="absolute top-4 right-4 text-white/40 hover:text-white transition-colors duration-300">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <h3 class="font-serif-display text-2xl">Prefere falar com</h3>
+      <p id="routeModalSubtitle" class="mt-1 text-sm text-white/50">a Kellen ou a Fran?</p>
+
+      <div class="mt-6 space-y-3">
+        <button type="button" data-seller="kellen" class="seller-option w-full flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-all duration-300 hover:border-yellow-500/40 hover:bg-yellow-500/[0.06]">
+          <span class="w-10 h-10 shrink-0 rounded-full border border-yellow-500/40 bg-yellow-500/[0.06] flex items-center justify-center font-serif-display text-yellow-500">K</span>
+          <span class="text-left">
+            <span class="block font-bold">Kellen</span>
+            <span class="block text-xs text-white/45">Vendedora</span>
+          </span>
+        </button>
+        <button type="button" data-seller="fran" class="seller-option w-full flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-all duration-300 hover:border-yellow-500/40 hover:bg-yellow-500/[0.06]">
+          <span class="w-10 h-10 shrink-0 rounded-full border border-yellow-500/40 bg-yellow-500/[0.06] flex items-center justify-center font-serif-display text-yellow-500">F</span>
+          <span class="text-left">
+            <span class="block font-bold">Fran</span>
+            <span class="block text-xs text-white/45">Vendedora</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================================ -->
   <!-- 4. LOJA FÍSICA -->
@@ -531,6 +576,58 @@
       if (e.key === 'Escape') closeNavMenu();
     });
   }
+
+  // ---- modal: escolher com qual vendedora falar (Varejo/Atacado) ----
+  const sellers = {
+    kellen: { name: 'Kellen', phone: '5535997801292' },
+    fran: { name: 'Fran', phone: '5535998054883' }
+  };
+  const categoryGreetings = {
+    varejo: (name) => `Oi ${name}! Vim do Instagram, pode me ajudar? \u{1F60A}`,
+    atacado: (name) => `Oi ${name}! Sou revendedora e quero informações sobre atacado \u{1F60A}`
+  };
+  const categorySubtitles = {
+    varejo: 'a Kellen ou a Fran?',
+    atacado: 'a Kellen ou a Fran?'
+  };
+
+  const routeModalOverlay = document.getElementById('routeModalOverlay');
+  const routeModalPanel = document.getElementById('routeModalPanel');
+  const routeModalSubtitle = document.getElementById('routeModalSubtitle');
+  const routeModalClose = document.getElementById('routeModalClose');
+  let currentCategory = null;
+
+  const closeRouteModal = () => {
+    routeModalOverlay.classList.remove('modal-open');
+    currentCategory = null;
+  };
+  const openRouteModal = (category) => {
+    currentCategory = category;
+    routeModalSubtitle.textContent = categorySubtitles[category];
+    routeModalOverlay.classList.add('modal-open');
+  };
+
+  document.querySelectorAll('.route-trigger').forEach((btn) => {
+    btn.addEventListener('click', () => openRouteModal(btn.dataset.category));
+  });
+
+  document.querySelectorAll('.seller-option').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const seller = sellers[btn.dataset.seller];
+      const message = categoryGreetings[currentCategory](seller.name);
+      const url = `https://wa.me/${seller.phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank', 'noopener');
+      closeRouteModal();
+    });
+  });
+
+  routeModalClose.addEventListener('click', closeRouteModal);
+  routeModalOverlay.addEventListener('click', (e) => {
+    if (e.target === routeModalOverlay) closeRouteModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeRouteModal();
+  });
 
   // ---- reveal on scroll ----
   const revealObserver = new IntersectionObserver((entries) => {
